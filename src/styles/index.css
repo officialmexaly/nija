@@ -1,0 +1,13 @@
+/*
+ * Main Styles Entry Point
+ * Imports all CSS modules in the correct order
+ */
+
+/* Theme variables (must come first) */
+@import './theme.css';
+
+/* Global styles and base configuration */
+@import './global.css';
+
+/* Scroll animations */
+@import './animations.css';

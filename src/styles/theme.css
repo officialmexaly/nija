@@ -1,0 +1,67 @@
+/* CSS Variables - Theme Configuration */
+
+:root {
+  /* Sophisticated neutral palette inspired by Linear/Stripe/Vercel */
+  --color-background: #FAFAF9;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FEFEFE;
+
+  /* Text colors with better contrast */
+  --color-text: #09090B;
+  --color-text-secondary: #52525B;
+  --color-text-tertiary: #A1A1AA;
+
+  /* Border colors - refined and subtle */
+  --color-border: #E4E4E7;
+  --color-border-subtle: #F4F4F5;
+
+  /* Grid color - more visible than border-subtle */
+  --color-grid: #E4E4E7;
+
+  /* Accent colors - teal */
+  --color-accent: #0D9488;
+  --color-accent-hover: #0F766E;
+  --color-accent-light: #5EEAD4;
+
+  /* Semantic colors */
+  --color-success: #059669;
+  --color-success-light: #D1FAE5;
+
+  /* Spacing scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+  --spacing-5xl: 128px;
+}
+
+.dark {
+  --color-background: #09090B;
+  --color-surface: #0C0C0E;
+  --color-surface-elevated: #121214;
+
+  /* Text colors for dark mode */
+  --color-text: #FAFAF9;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #71717A;
+
+  /* Border colors for dark mode */
+  --color-border: #27272A;
+  --color-border-subtle: #1C1C1E;
+
+  /* Grid color for dark mode - more visible */
+  --color-grid: #27272A;
+
+  /* Accent colors for dark mode - teal */
+  --color-accent: #2DD4BF;
+  --color-accent-hover: #5EEAD4;
+  --color-accent-light: #0D9488;
+
+  /* Semantic colors for dark mode */
+  --color-success: #34D399;
+  --color-success-light: #052E16;
+}
