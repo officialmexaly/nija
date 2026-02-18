@@ -5,19 +5,7 @@ export function Navigation() {
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
-  };
+  const [activeSection, setActiveSection] = useState('');
 
   const navLinks = [
     { href: '#about', label: 'About' },
@@ -27,10 +15,60 @@ export function Navigation() {
     { href: '#contact', label: 'Contact' },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Track which section is currently in view using scroll position
+    const handleScrollSpy = () => {
+      const sections = navLinks.map(link => document.querySelector(link.href));
+      let currentSection = '';
+
+      sections.forEach((section) => {
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = `#${section.id}`;
+          }
+        }
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
+    };
+
+    // Initial check after sections are mounted
+    const timeoutId = setTimeout(() => {
+      handleScrollSpy();
+    }, 500);
+
+    window.addEventListener('scroll', handleScrollSpy);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScrollSpy);
+    };
+  }, []);
+
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('dark');
+  };
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
+      setActiveSection(href);
       element.scrollIntoView({ behavior: 'smooth' });
       setIsMenuOpen(false);
     }
@@ -68,7 +106,11 @@ export function Navigation() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="px-4 py-2.5 text-sm font-medium text-secondary hover:text-text transition-all rounded-lg hover:bg-border-subtle"
+                className={`px-4 py-2.5 text-sm font-medium transition-all rounded-lg ${
+                  activeSection === link.href
+                    ? 'bg-teal-600 text-white shadow-subtle'
+                    : 'text-secondary hover:text-text hover:bg-border-subtle'
+                }`}
               >
                 {link.label}
               </a>
@@ -126,7 +168,11 @@ export function Navigation() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="px-4 py-3 text-base font-medium text-secondary hover:text-text transition-all rounded-lg hover:bg-border-subtle"
+                  className={`px-4 py-3 text-base font-medium transition-all rounded-lg ${
+                    activeSection === link.href
+                      ? 'bg-teal-600 text-white'
+                      : 'text-secondary hover:text-text hover:bg-border-subtle'
+                  }`}
                 >
                   {link.label}
                 </a>
